@@ -1,0 +1,11 @@
+{% load i18n %}
+<h1>{{ question.question_text }}</h1>
+
+<ul>
+{% for choice in question.choice_set.all %}
+    <li>{{ choice.choice_text }} -- {{ choice.votes }} {% blocktrans count counter=choice.votes %}vote{% plural %}votes{% endblocktrans %}</li>
+
+{% endfor %}
+</ul>
+
+<a href="{% url 'polls:detail' question.id %}">Проголосовать снова</a>
