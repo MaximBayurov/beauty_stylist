@@ -30,6 +30,23 @@ class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)
-    
+
     def __str__(self):
         return self.choice_text
+
+    class Meta:
+        verbose_name = 'Вариант'
+        verbose_name_plural = 'Варианты'
+
+
+class Poll(models.Model):
+    name = models.CharField(max_length=200)
+    active = models.BooleanField()
+    question = models.ManyToManyField(Question)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Опрос'
+        verbose_name_plural = 'Опросы'

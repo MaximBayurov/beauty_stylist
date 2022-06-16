@@ -1,4 +1,4 @@
-"""beauty_stylist URL Configuration
+"""djangoProject URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/dev/topics/http/urls/
@@ -16,7 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from . import views
+
 urlpatterns = [
+    path('', views.index, name='index'),
     path('polls/', include('polls.urls')),
     path('admin/', admin.site.urls),
+
+    path('accounts/login/', views.CustomLoginView.as_view(), name='login'),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('register/', views.register, name='register'),
 ]

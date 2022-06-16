@@ -1,0 +1,43 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'djangoProject/login.css' %}">
+
+{% if form.errors %}
+<p>Некорректный пароль или логин. Попробуйте снова</p>
+{% endif %}
+
+{% if next %}
+{% if user.is_authenticated %}
+<p>Аккаунт не имеет доступа к этой странице. Попробуйте авторизоваться под другим.</p>
+{% else %}
+<p>Авторизуйтесь, чтобы просматривать эту страницу.</p>
+{% endif %}
+{% endif %}
+
+<main class="form-signin">
+    <form method="post" action="{% url 'login' %}">
+        <h1 class="h3 mb-3 fw-normal">Авторизация</h1>
+
+        {% csrf_token %}
+
+        <div class="form-floating">
+            {{ form.username }}
+            {{ form.username.label_tag }}
+        </div>
+        <div class="form-floating">
+            {{ form.password }}
+            {{ form.password.label_tag }}
+        </div>
+
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Войти</button>
+        <input type="hidden" name="next" value="{{ next }}"/>
+    </form>
+
+    {# Assumes you setup the password_reset view in your URLconf #}
+    <hr class="my-4">
+    <p class="text-center"><a href="{% url 'password_reset' %}">Забыли пароль?</a></p>
+</main>
+
+{% endblock %}
